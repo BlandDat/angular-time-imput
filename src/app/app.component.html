@@ -1,0 +1,26 @@
+<form [formGroup]="form">
+
+  <div class="input-container">
+    <h6>24h</h6>
+    <time-input formControlName="input-24h"></time-input>
+  </div>
+
+  <div class="input-container">
+    <h6>12h</h6>
+    <time-input [format]="0"  formControlName="input-12h"></time-input>
+  </div>
+
+  <div class="input-container">
+    <h6>24h-custom-separator</h6>
+    <time-input [format]="0" [separator]="'##@##'"  formControlName="input-24h-custom"></time-input>
+  </div>
+
+</form>
+
+<span>
+  {{ form.valueChanges | async | json }}
+</span>
+
+<small>
+  place cursor before number you want to swap and press key
+</small>
