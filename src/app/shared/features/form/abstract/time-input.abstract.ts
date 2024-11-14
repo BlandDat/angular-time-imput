@@ -32,6 +32,7 @@ export abstract class TimeInput {
     }
 
     minutes = minutes.padEnd(2, '0');
+    hours = hours.padStart(2, '0');
 
     return `${hours}${this.separator}${minutes}`;
   }
@@ -60,7 +61,7 @@ export abstract class TimeInput {
 
     if (this.format === TimeFormat.Twenty) {
       if (selectionStart === 0) {
-        hours = `${digit}${hours[1]}`;
+        hours = `${digit}${hours[1] ?? ''}`;
         if (parseInt(hours, 10) > 23) hours = "23";
       } else if (selectionStart === 1) {
         hours = `${hours[0]}${digit}`;

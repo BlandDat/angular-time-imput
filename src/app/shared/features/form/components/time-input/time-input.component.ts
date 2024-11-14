@@ -118,9 +118,8 @@ export class TimeInputComponent extends TimeInput implements ControlValueAccesso
   }
 
   private _setTime(value: string): void {
-    if (value.length >= 3) {
-      value = this.applyMask(value);
-    }
+
+    value = this.applyMask(value);
 
     if (this.isValidTime(value)) {
       this.timeValue.set(value);
