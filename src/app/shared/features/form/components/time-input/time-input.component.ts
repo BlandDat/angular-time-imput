@@ -41,7 +41,7 @@ export class TimeInputComponent extends TimeInput implements ControlValueAccesso
 
   @Input() public format = TimeFormat.Twenty
 
-  @ViewChild(MatInput) public timeInput!: MatInput;
+  @ViewChild(MatInput, { static: true }) public timeInput!: MatInput;
 
   public readonly timeValue = signal<string | null>(null);
 
@@ -60,10 +60,12 @@ export class TimeInputComponent extends TimeInput implements ControlValueAccesso
     if (!isString(value)) {
       return;
     }
+
+    this._setTime(value);
+    this.timeInput.value = this.timeValue();
   }
 
   public handleInput(event: Event): void {
-
     const target = event.target as HTMLInputElement;
 
     let value = target.value;
@@ -72,7 +74,6 @@ export class TimeInputComponent extends TimeInput implements ControlValueAccesso
   }
 
   public handleKeydown(event: KeyboardEvent): void {
-
     const target = event.target as HTMLInputElement;
     const selection = Number(target.selectionStart);
     let value = target.value;
@@ -117,7 +118,6 @@ export class TimeInputComponent extends TimeInput implements ControlValueAccesso
   }
 
   private _setTime(value: string): void {
-
     if (value.length >= 3) {
       value = this.applyMask(value);
     }
