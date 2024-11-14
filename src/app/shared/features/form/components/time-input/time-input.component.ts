@@ -32,7 +32,7 @@ import {TimeFormat} from '../../abstract/input-format.enum';
       multi: true,
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimeInputComponent extends TimeInput implements ControlValueAccessor {
   @Input({required: false, transform: (data: InputFormat) => {
@@ -45,15 +45,15 @@ export class TimeInputComponent extends TimeInput implements ControlValueAccesso
 
   public readonly timeValue = signal<string | null>(null);
 
-  private _onChange!: ((value: unknown) => void);
-  private _onTouch!: (() => void);
+  public onChange!: ((value: unknown) => void);
+  public onTouch!: (() => void);
 
   public registerOnChange(fn: (value: unknown) => void): void {
-    this._onChange = fn;
+    this.onChange = fn;
   }
 
   public registerOnTouched(fn: () => void): void {
-    this._onTouch = fn;
+    this.onTouch = fn;
   }
 
   public writeValue(value: unknown): void {
@@ -114,12 +114,14 @@ export class TimeInputComponent extends TimeInput implements ControlValueAccesso
 
     this.timeInput.value = value;
 
-    this._onChange(value);
+    this.onChange(value);
   }
 
   private _setTime(value: string): void {
 
-    value = this.applyMask(value);
+    if (value) {
+      value = this.applyMask(value);
+    }
 
     if (this.isValidTime(value)) {
       this.timeValue.set(value);
